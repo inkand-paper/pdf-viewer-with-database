@@ -27,7 +27,7 @@
                 app:icon="@drawable/upload"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/LinearLayout1" />
+                app:layout_constraintTop_toBottomOf="@id/TextInputLayout4" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -135,43 +135,9 @@
                 app:cornerRadius="5dp"
                 app:layout_constraintEnd_toEndOf="@id/TextInputLayout4"
                 app:layout_constraintStart_toStartOf="@id/TextInputLayout4"
-                app:layout_constraintTop_toBottomOf="@id/TextInputLayout4" />
-
-            <LinearLayout
-                android:id="@+id/LinearLayout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="15"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/SaveBtn">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="7.1"
-                    android:background="@color/black" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_weight=".8"
-                    android:gravity="center"
-                    android:text="OR"
-                    android:textSize="10sp" />
+                app:layout_constraintTop_toBottomOf="@id/UploadBtn" />
 
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="7.1"
-                    android:background="@color/black" />
-            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/BackBtn"
@@ -183,7 +149,7 @@
                 app:cornerRadius="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/UploadBtn" />
+                app:layout_constraintTop_toBottomOf="@id/SaveBtn" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
