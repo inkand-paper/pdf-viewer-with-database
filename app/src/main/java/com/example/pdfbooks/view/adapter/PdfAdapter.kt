@@ -33,7 +33,7 @@ class PdfAdapter(
             root.setOnClickListener{
                 onClick(singleData)
             }
-            root.setOnClickListener {
+            root.setOnLongClickListener {
                 onLongClick(singleData)
                 true
             }

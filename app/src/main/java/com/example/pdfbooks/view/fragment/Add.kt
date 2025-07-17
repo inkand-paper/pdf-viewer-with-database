@@ -19,6 +19,8 @@ import kotlinx.coroutines.withContext
 class Add : Fragment() {
     private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding!!
+    private lateinit var book: PdfData
+    private var isEditMode = false
 
     private val pdfDao by lazy {
         PdfDatabase.INSTANCE?.pdfDao() ?: error("Database not initialized")
@@ -44,6 +46,20 @@ class Add : Fragment() {
             val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.BottomNavigationView)
             bottomNav.selectedItemId = R.id.Home
         }
+        editBook()
+    }
+
+    private fun editBook() {
+        val bundle = arguments
+        if (bundle?.getString("code") == "y"){
+            isEditMode = true
+
+            binding.TextInputEditText1.setText(bundle.getString("name"))
+            binding.TextInputEditText2.setText(bundle.getString("author"))
+            binding.TextInputEditText3.setText(bundle.getString("version"))
+            binding.TextInputEditText4.setText(bundle.getString("publish"))
+            binding.SaveBtn.text = "Update"
+        }
     }
 
     private fun saveBook() {
@@ -53,15 +69,14 @@ class Add : Fragment() {
         val publish = binding.TextInputEditText4.text.toString().trim()
 
         if (name.isEmpty() || author.isEmpty()) {
-            Toast.makeText(
-                requireContext(),
-                "Book Name and Author are required",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(requireContext(), "Book Name and Author are required", Toast.LENGTH_SHORT).show()
             return
         }
+
+        val bookId = if (isEditMode) arguments?.getInt("id") ?: 0 else 0
+
         val newBook = PdfData(
-            id = 0,
+            id = bookId,
             name = name,
             author = author,
             version = version,
@@ -70,12 +85,18 @@ class Add : Fragment() {
 
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
-                pdfDao.insertData(newBook)
+                if (isEditMode) {
+                    pdfDao.updateData(newBook)
+                } else {
+                    pdfDao.insertData(newBook)
+                }
             }
-            Toast.makeText(requireContext(), "Book saved successfully", Toast.LENGTH_SHORT).show()
+            val msg = if (isEditMode) "Book updated successfully" else "Book saved successfully"
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
             requireActivity().supportFragmentManager.popBackStack()
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
